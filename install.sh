@@ -31,7 +31,10 @@ if [[ $EUID -eq 0 ]]; then
     fi
 
     # Re-run as regular user
-    cp "$0" /home/$USER/install.sh && chown $USER:$USER /home/$USER/install.sh
+    # Download script again when piped from curl
+    curl -sSL https://raw.githubusercontent.com/trungpv1601/mtproxy-setup/main/install.sh > /home/$USER/install.sh
+    chown $USER:$USER /home/$USER/install.sh
+    chmod +x /home/$USER/install.sh
     cd /home/$USER && exec sudo -u $USER bash install.sh $PORT $SECRET
 fi
 
